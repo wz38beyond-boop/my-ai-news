@@ -1,0 +1,21 @@
+name: ntfy Notify
+  on:
+    workflow_dispatch:
+      inputs:
+        title:
+          required: true
+        message:
+          required: true
+
+  jobs:
+    notify:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Send to ntfy.sh
+          run: |
+            curl -s \
+              -H "Title: ${{ inputs.title }}" \
+              -H "Tags: newspaper,robot" \
+              -H "Priority: default" \
+              -d "${{ inputs.message }}" \
+              https://ntfy.sh/my-ai-news
